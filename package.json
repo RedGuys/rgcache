@@ -1,0 +1,11 @@
+{
+  "name": "rgcache",
+  "version": "1.0.1",
+  "description": "Little caching module.",
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "scripts": {},
+  "keywords": ["cache"],
+  "author": "RedGuys",
+  "license": "ISC"
+}
