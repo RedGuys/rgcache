@@ -1,9 +1,9 @@
 export class Cache {
-    constructor(options: { ttl?: number, loader?: (any) => Object, loadStrategy?:"one"|"multiple" });
+    constructor(options: { ttl?: number, loader?: (any) => Object, loadStrategy?: "one" | "multiple" });
 
-    get(key: any): Promise<any>;
+    get(key: any, payload?: any): Promise<any>;
 
-    mGet(keys: any[]): Promise<Object>
+    mGet(keys: any[], payload?: any): Promise<Object>
 
     set(key: any, value: any, ttl?: number);
 
