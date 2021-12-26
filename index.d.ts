@@ -1,5 +1,5 @@
 export class Cache {
-    constructor(options: { ttl?: number, loader?: (any) => Object, loadStrategy?: "one" | "multiple" });
+    constructor(options: { ttl?: number, loader?: (any) => Object, loadStrategy?: "one" | "multiple", thisArg: any});
 
     get(key: any, payload?: any): Promise<any>;
 
