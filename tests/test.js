@@ -3,19 +3,19 @@ function sleep(ms) {
 }
 
 let Cache = require('..').Cache;
+let Crypto = require("crypto");
 let aCache = new Cache({
-    ttl: 600, loadStrategy:"one",
+    ttl: 1, loadStrategy:"one",
     loader: async (key="", payload) => {
-        await sleep(5000);
+        await sleep(10);
         return key.toLowerCase();
     }
 });
 
 (async () => {
     let tasks = [];
-    for (let i = 0; i < 5000; i++) {
-        tasks.push(aCache.get("BBB"))
+    for (let i = 0; i < 100; i++) {
+        tasks.push(await aCache.get(Crypto.randomUUID()));
     }
-    await Promise.all(tasks);
     console.log(aCache.stats())
 })();
