@@ -1,6 +1,6 @@
 {
   "name": "rgcache",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Little caching module.",
   "main": "lib/index.js",
   "types": "index.d.ts",

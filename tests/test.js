@@ -12,10 +12,6 @@ let aCache = new Cache({
     }
 });
 
-(async () => {
-    let tasks = [];
-    for (let i = 0; i < 100; i++) {
-        tasks.push(await aCache.get(Crypto.randomUUID()));
-    }
-    console.log(aCache.stats())
-})();
+aCache.set("b","a");
+aCache.delete("b");
+aCache.get("b")
