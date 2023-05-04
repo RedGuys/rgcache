@@ -9,6 +9,8 @@ let aCache = new Cache({
     loader: async (key="", payload) => {
         await sleep(10);
         return key.toLowerCase();
+    }, preDestroy: (k,v) => {
+        console.log("Destroying", k, v);
     }
 });
 
