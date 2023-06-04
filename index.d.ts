@@ -9,7 +9,7 @@ export class Cache {
      *     preDestroy: function - function to call before a value is removed from the cache
      * }
      */
-    constructor(options: { ttl?: number, loader?: (any) => Object, loadStrategy?: "one" | "multiple", thisArg: any, preDestroy: (key, value) => void});
+    constructor(options: { ttl?: number, loader?: (any) => Object, loadStrategy?: "one" | "multiple", thisArg: any, preDestroy: (key, value) => void, cacheLimit?: number});
 
     get(key: any, payload?: any): Promise<any>;
 

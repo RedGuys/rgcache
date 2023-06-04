@@ -11,9 +11,12 @@ let aCache = new Cache({
         return key.toLowerCase();
     }, preDestroy: (k,v) => {
         console.log("Destroying", k, v);
-    }
+    }, cacheLimit: 2
 });
-
-aCache.set("b","a");
-aCache.delete("b");
-aCache.get("b")
+(async () => {
+    await aCache.set("a", "A");
+    await aCache.set("b", "B");
+    await aCache.set("c", "C");
+    await aCache.set("d", "D");
+})();
+console.log(aCache)
