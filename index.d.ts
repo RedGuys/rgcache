@@ -22,4 +22,6 @@ export class Cache {
     clear(): Promise<void>;
 
     stats(): { keys: number, hits: number, miss: number };
+
+    has(key: any): boolean;
 }

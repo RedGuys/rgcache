@@ -16,6 +16,8 @@ let aCache = new Cache({
 (async () => {
     await aCache.set("a", "A");
     await aCache.set("b", "B");
+    console.log(aCache.has("a"));
+    console.log(aCache.has("c"));
     await aCache.set("c", "C");
     await aCache.set("d", "D");
 })();
