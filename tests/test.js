@@ -5,20 +5,12 @@ function sleep(ms) {
 let Cache = require('..').Cache;
 let Crypto = require("crypto");
 let aCache = new Cache({
-    ttl: 1, loadStrategy:"one",
-    loader: async (key="", payload) => {
-        await sleep(10);
-        return key.toLowerCase();
-    }, preDestroy: (k,v) => {
+    ttl: 1, loadStrategy:"one", preDestroy: (k,v) => {
         console.log("Destroying", k, v);
     }, cacheLimit: 2
 });
 (async () => {
-    await aCache.set("a", "A");
-    await aCache.set("b", "B");
-    console.log(aCache.has("a"));
-    console.log(aCache.has("c"));
-    await aCache.set("c", "C");
-    await aCache.set("d", "D");
+    console.log(await aCache.get("a"));
+    console.log(await aCache.get("b", async (key) => {return key + "b"}));
 })();
 console.log(aCache)

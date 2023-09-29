@@ -11,7 +11,13 @@ export class Cache {
      */
     constructor(options: { ttl?: number, loader?: (any) => Object, loadStrategy?: "one" | "multiple", thisArg?: any, preDestroy?: (key, value) => void, cacheLimit?: number});
 
-    get(key: any, payload?: any): Promise<any>;
+    /**
+     * Gets a value from the cache
+     * @param key - key to get
+     * @param payload - payload to pass to loader, if passed function and loader is not set, will use as loader
+     * @param loader - loader to use if value is not in the cache
+     */
+    get(key: any, payload?: any, loader?: (any) => Object): Promise<any>;
 
     mGet(keys: any[], payload?: any): Promise<Object>;
 
