@@ -29,4 +29,5 @@ let aCache = new Cache({
     aCache.clear();
     console.log(await aCache.get("LOL"))
     console.log(aCache.stats());
-})();```
+})();
+```
