@@ -10,6 +10,9 @@ let cache = new Redis("test", {redis: {host: "localhost", port: 6379}});
     test(await cache.get("b") === null, "Deleting value check");
     await cache.set("c", "ccb");
     test(await cache.get("c") === "ccb", "Setting value check");
+    console.log(await cache.stats());
+    await cache.resetStats();
+    console.log(await cache.stats());
 })();
 
 function test(assertion, message) {

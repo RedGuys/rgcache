@@ -77,6 +77,8 @@ export class RedisCache {
     stats(): Promise<{ keys: number, hits: number, miss: number }>;
 
     has(key: any): boolean;
+
+    resetStats(): Promise<void>;
 }
 
 export type RedisCacheOptions = {
