@@ -10,6 +10,8 @@ let cache = new Redis({});
     test(await cache.get("b") === null, "Deleting value check");
     await cache.set("c", "ccb");
     test(await cache.get("c") === "ccb", "Setting value check");
+    await cache.set("c", null);
+    console.log(await cache.has("c"))
 })();
 
 function test(assertion, message) {
