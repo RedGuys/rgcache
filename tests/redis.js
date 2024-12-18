@@ -13,6 +13,8 @@ let cache = new Redis("test", {redis: {host: "localhost", port: 6379}});
     console.log(await cache.stats());
     await cache.resetStats();
     console.log(await cache.stats());
+    await cache.set("aaa", {"g": "g", "h": "gh"});
+    console.log(typeof await cache.get("aaa"));
 })();
 
 function test(assertion, message) {
