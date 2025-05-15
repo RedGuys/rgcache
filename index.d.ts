@@ -1,128 +1,64 @@
-import {RedisOptions} from "ioredis/built/redis/RedisOptions";
-
-export class MemoryCache {
+export type Stats = {
     /**
-     * Constructs a new Cache instance
-     * @param options {
-     *     ttl: number - time to live in seconds
-     *     loader: function - function to load a value if it is not in the cache
-     *     loadStrategy: "one" | "multiple" - loadStrategy to use when loading values
-     *     thisArg: any - thisArg to use when calling loader or preDestroy
-     *     preDestroy: function - function to call before a value is removed from the cache
-     * }
+     * Number of keys stored in cache currently
+     * @type {number}
      */
-    constructor(options?: MemoryCacheOptions);
+    keys: number,
 
     /**
-     * Gets a value from the cache
-     * @param key - key to get
-     * @param payload - payload to pass to loader, if passed function and loader is not set, will use as loader
-     * @param loader - loader to use if value is not in the cache
+     * Number of cache hits since cache initialization
+     *
+     * Note, RedisCache store this value on server and instance restart/recreation will NOT reset it
+     * @type {number}
      */
-    get(key: any, payload?: any, loader?: (any) => Object): Promise<any>;
+    hits: number,
 
-    mGet(keys: any[], payload?: any): Promise<Object>;
-
-    set(key: any, value: any, ttl?: number): Promise<void>;
-
-    delete(key: any): Promise<void>;
-
-    clear(): Promise<void>;
-
-    stats(): { keys: number, hits: number, miss: number };
-
-    has(key: any): boolean;
+    /**
+     * Number of cache misses since cache initialization
+     *
+     * Note, RedisCache store this value on server and instance restart/recreation will NOT reset it
+     * @type {number}
+     */
+    miss: number
 }
 
-export type MemoryCacheOptions = {
-    ttl?: number,
-    loader?: (any) => Object,
-    loadStrategy?: "one" | "multiple",
-    thisArg?: any,
-    preDestroy?: (key, value) => void,
+export type LoadStrategy = "one" | "multiple";
+
+export type Loader<K, V, P> = (key: K | K[], payload?: P) => Promise<V | V[]>;
+
+export type PreDestroy<K, V> = (key: K, value: V) => Promise<void>;
+
+export type LimitableCapacity = {
+    /**
+     * Maximum number of keys to store in cache
+     */
     cacheLimit?: number
-};
-
-export class RedisCache {
-    /**
-     * Constructs a new Cache instance
-     * @param name - name of the cache
-     * @param options {
-     *     ttl: number - time to live in seconds
-     *     loader: function - function to load a value if it is not in the cache
-     *     loadStrategy: "one" | "multiple" - loadStrategy to use when loading values
-     *     thisArg: any - thisArg to use when calling loader or preDestroy
-     *     preDestroy: function - function to call before a value is removed from the cache
-     *     redis: RedisOptions - options to pass to ioredis
-     * }
-     */
-    constructor(name:string, options?: RedisCacheOptions);
-
-    /**
-     * Gets a value from the cache
-     * @param key - key to get
-     * @param payload - payload to pass to loader, if passed function and loader is not set, will use as loader
-     * @param loader - loader to use if value is not in the cache
-     */
-    get(key: any, payload?: any, loader?: (any) => Object): Promise<any>;
-
-    mGet(keys: any[], payload?: any): Promise<Object>;
-
-    set(key: any, value: any, ttl?: number): Promise<void>;
-
-    delete(key: any): Promise<void>;
-
-    clear(): Promise<void>;
-
-    stats(): Promise<{ keys: number, hits: number, miss: number }>;
-
-    has(key: any): Promise<boolean>;
-
-    resetStats(): Promise<void>;
 }
 
-export class RedisSyncedMemoryCache {
+export type CacheOptions<K, V, P> = {
     /**
-     * Constructs a new Cache instance
-     * @param name - name of the cache
-     * @param options {
-     *     ttl: number - time to live in seconds
-     *     loader: function - function to load a value if it is not in the cache
-     *     loadStrategy: "one" | "multiple" - loadStrategy to use when loading values
-     *     thisArg: any - thisArg to use when calling loader or preDestroy
-     *     preDestroy: function - function to call before a value is removed from the cache
-     *     redis: RedisOptions - options to pass to ioredis
-     * }
+     * Time to live in seconds for cache entries
      */
-    constructor(name:string, options?: RedisCacheOptions);
-
-    /**
-     * Gets a value from the cache
-     * @param key - key to get
-     * @param payload - payload to pass to loader, if passed function and loader is not set, will use as loader
-     * @param loader - loader to use if value is not in the cache
-     */
-    get(key: any, payload?: any, loader?: (any) => Object): Promise<any>;
-
-    mGet(keys: any[], payload?: any): Promise<Object>;
-
-    set(key: any, value: any, ttl?: number): Promise<void>;
-
-    delete(key: any): Promise<void>;
-
-    clear(): Promise<void>;
-
-    stats(): { keys: number, hits: number, miss: number };
-
-    has(key: any): boolean;
-}
-
-export type RedisCacheOptions = {
-    redis?: RedisOptions,
     ttl?: number,
-    loader?: (any) => Object,
-    loadStrategy?: "one" | "multiple",
-    thisArg?: any,
-    preDestroy?: (key, value) => void,
-    cacheLimit?: number
+    /**
+     * Loader function to load a value if it is not in the cache
+     * @param key - key to load
+     * @param payload - payload to pass to loader
+     * @returns - promise that resolves to value
+     */
+    loader?: Loader<K, V, P>
+    /**
+     * LoadStrategy to use when loading values
+     */
+    loadStrategy?: LoadStrategy,
+    /**
+     * this for loader and preDestroy to save your context
+     */
+    thisArg?: object,
+    /**
+     * Function to call before a value is removed from the cache
+     * @param key - key of removed entry
+     * @param value - value of removed entry
+     */
+    preDestroy?: PreDestroy<K, V>,
 }
