@@ -1,6 +1,5 @@
-import MemoryCache from './MemoryCache';
-import RedisCache from './RedisCache';
 import {CacheOptions, LimitableCapacity, Loader, Stats} from '../index';
+import {RedisOptions} from "ioredis/built/redis/RedisOptions";
 
 /**
  * Опции для HybridCache
@@ -18,7 +17,7 @@ export interface HybridCacheOptions<K, V, P> extends CacheOptions<K, V, P>, Limi
   /**
    * Параметры подключения к Redis (host, port и т.д.)
    */
-  redis?: any;
+  redis?: RedisOptions;
 }
 
 /**
@@ -32,7 +31,7 @@ export interface HybridCacheOptions<K, V, P> extends CacheOptions<K, V, P>, Limi
  * @template V - тип значения
  * @template P - тип payload
  */
-export default class HybridCache<K, V, P> {
+export class HybridCache<K, V, P> {
   /**
    * @param name - имя кэша (используется как префикс в Redis)
    * @param options - опции кэша (ttl, loader, pubsub и др.)

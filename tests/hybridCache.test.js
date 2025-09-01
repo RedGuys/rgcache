@@ -1,4 +1,4 @@
-const HybridCache = require('../lib/HybridCache');
+const { HybridCache } = require('../lib/HybridCache');
 
 describe('HybridCache', () => {
   let cache;

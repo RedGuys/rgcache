@@ -1,7 +1,7 @@
 import {Stats, CacheOptions, Loader} from "../index";
 import {RedisOptions} from "ioredis/built/redis/RedisOptions";
 
-export default class RedisCache<K, V, P> {
+export class RedisCache<K, V, P> {
     /**
      * Constructs a new RedisCache instance
      * @param name - name of the cache
@@ -15,7 +15,7 @@ export default class RedisCache<K, V, P> {
      * @param payload - payload to pass to loader, if passed function and loader is not set, will use as loader
      * @param loader - loader to use if value is not in the cache (overrides loader in options)
      */
-    get(key: K, payload?: P, loader?: Loader<K, V, P>): Promise<any>;
+    get(key: K, payload?: P, loader?: Loader<K, V, P>): Promise<V>;
 
     /**
      * Gets array of values from the cache

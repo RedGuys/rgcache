@@ -1,3 +1,8 @@
+export * from "./lib/HybridCache";
+export * from "./lib/MemoryCache";
+export * from "./lib/RedisCache";
+export * from "./lib/RedisSyncedMemoryCache";
+
 export type Stats = {
     /**
      * Number of keys stored in cache currently
@@ -26,7 +31,7 @@ export type LoadStrategy = "one" | "multiple";
 
 export type Loader<K, V, P> = (key: K | K[], payload?: P) => Promise<V | V[]>;
 
-export type PreDestroy<K, V> = (key: K, value: V) => Promise<void>;
+export type PreDestroy<K, V> = (key: K, value: V, isDeleted?: boolean) => Promise<void> | void;
 
 export type LimitableCapacity = {
     /**
