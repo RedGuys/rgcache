@@ -1,7 +1,7 @@
 import {LimitableCapacity, Loader, Stats} from "../index";
 import {RedisCacheOptions} from "./RedisCache";
 
-export class RedisSyncedMemoryCache<K, V, P> {
+export class RedisSyncedMemoryCache<K, V, P = void> {
     /**
      * Constructs a new Cache instance
      * @param name - name of the cache

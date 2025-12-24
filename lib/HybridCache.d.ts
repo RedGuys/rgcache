@@ -31,7 +31,7 @@ export interface HybridCacheOptions<K, V, P> extends CacheOptions<K, V, P>, Limi
  * @template V - тип значения
  * @template P - тип payload
  */
-export class HybridCache<K, V, P> {
+export class HybridCache<K, V, P = void> {
   /**
    * @param name - имя кэша (используется как префикс в Redis)
    * @param options - опции кэша (ttl, loader, pubsub и др.)

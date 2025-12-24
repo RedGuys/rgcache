@@ -29,7 +29,7 @@ export type Stats = {
 
 export type LoadStrategy = "one" | "multiple";
 
-export type Loader<K, V, P> = (key: K | K[], payload?: P) => Promise<V | V[]>;
+export type Loader<K, V, P = void> = ((key: K, payload?: P) => Promise<V>) | ((keys: K[], payload?: P) => Promise<V[]>);
 
 export type PreDestroy<K, V> = (key: K, value: V, isDeleted?: boolean) => Promise<void> | void;
 
@@ -40,7 +40,7 @@ export type LimitableCapacity = {
     cacheLimit?: number
 }
 
-export type CacheOptions<K, V, P> = {
+export type CacheOptions<K, V, P = void> = {
     /**
      * Time to live in seconds for cache entries
      */

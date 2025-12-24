@@ -1,7 +1,7 @@
 import {Stats, CacheOptions, Loader} from "../index";
 import {RedisOptions} from "ioredis/built/redis/RedisOptions";
 
-export class RedisCache<K, V, P> {
+export class RedisCache<K, V, P = void> {
     /**
      * Constructs a new RedisCache instance
      * @param name - name of the cache

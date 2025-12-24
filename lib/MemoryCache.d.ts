@@ -1,6 +1,6 @@
 import {CacheOptions, LimitableCapacity, Loader, Stats} from "../index";
 
-export class MemoryCache<K, V, P> {
+export class MemoryCache<K, V, P = void> {
     /**
      * Constructs a new Cache instance
      * @param options - cache options
